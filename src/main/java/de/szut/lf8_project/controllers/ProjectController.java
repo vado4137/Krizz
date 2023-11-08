@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,13 +37,12 @@ public class ProjectController {
     // Project
 
     @PostMapping("/projects")
-    public GetProjectDTO create(@RequestBody CreateProjectDTO dto) {
-        dto.getInvalids();
+    public GetProjectDTO create(@RequestBody @Valid CreateProjectDTO dto) {
         return mappingService.mapProjectEntityToGetProjectDTO(projectService.create(mappingService.mapCreateProjectDTOToProjectEntity(dto)));
     }
 
     @PostMapping("/projects/{id}")
-    public GetProjectDTO update(@RequestBody CreateProjectDTO dto, @PathVariable Long id) {
+    public GetProjectDTO update(@RequestBody @Valid CreateProjectDTO dto, @PathVariable Long id) {
         ProjectEntity entity = projectService.update(mappingService.mapCreateProjectDTOToProjectEntity(dto, id));
         if (entity == null) {
             throw new ResourceNotFoundException("Project " + id + " does not exist");
@@ -94,7 +94,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/{id}/employees")
-    public GetProjectDTO addEmployeeToProject(@PathVariable Long id, @RequestHeader("Authorization") String token, @RequestBody CreateEmployeeAssocDTO dto) {
+    public GetProjectDTO addEmployeeToProject(@PathVariable Long id, @RequestHeader("Authorization") String token, @RequestBody @Valid CreateEmployeeAssocDTO dto) {
         ProjectEntity entity = projectService.findById(id);
         if (entity == null) {
             throw new ResourceNotFoundException("Project " + id + " does not exist");

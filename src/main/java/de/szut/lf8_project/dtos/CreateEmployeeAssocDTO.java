@@ -2,9 +2,14 @@ package de.szut.lf8_project.dtos;
 
 import lombok.Data;
 
-@Data
-public class CreateEmployeeAssocDTO extends DTO {
+import javax.validation.constraints.NotNull;
 
+@Data
+public class CreateEmployeeAssocDTO {
+
+    @NotNull(message = "employeeId must not be empty")
     private Long employeeId;
+
+    @NotNull(message = "role must not be empty")
     private Long role;
 }

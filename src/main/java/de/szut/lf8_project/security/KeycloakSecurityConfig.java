@@ -29,8 +29,7 @@ class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/hello/**").hasRole("user")
-                .antMatchers("/api/**").hasRole("user")
+                .antMatchers("/**").hasRole("user")
                 .anyRequest()
                 .permitAll();
     }

@@ -3,7 +3,7 @@ package de.szut.lf8_project.dtos;
 import lombok.Data;
 
 @Data
-public class GetEmployeeDTO extends DTO {
+public class GetEmployeeDTO {
 
     private Long id;
     private String firstName;

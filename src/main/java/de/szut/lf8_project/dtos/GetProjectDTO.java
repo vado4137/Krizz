@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class GetProjectDTO extends DTO {
+public class GetProjectDTO {
 
     private String description;
 
