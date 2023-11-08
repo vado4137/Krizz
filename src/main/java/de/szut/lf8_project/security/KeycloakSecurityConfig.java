@@ -30,6 +30,7 @@ class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/hello/**").hasRole("user")
+                .antMatchers("/api/**").hasRole("user")
                 .anyRequest()
                 .permitAll();
     }

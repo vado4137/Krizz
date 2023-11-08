@@ -36,11 +36,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDetails> handleAllOtherExceptions(Exception exception, WebRequest request) {
         String details = request.getDescription(false);
         if (exception instanceof HttpMessageNotReadableException) {
-            if (Pattern.matches(".*/api/projects/\\d+/employees.*", details)) {
+            if (Pattern.matches(".*/projects/\\d+/employees.*", details)) {
                 return handleWrongIdFormatException(new WrongIdFormatException("Body is missing. Please type in the employeeId"), request);
             }
         }
-        System.out.println(exception.getClass());
         ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), details, new Date());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }

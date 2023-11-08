@@ -1,12 +1,11 @@
 package de.szut.lf8_project.services;
 
 import de.szut.lf8_project.dtos.*;
-import de.szut.lf8_project.entities.EmployeeAssocEntity;
-import de.szut.lf8_project.entities.EmployeeAssocId;
-import de.szut.lf8_project.entities.ProjectEntity;
+import de.szut.lf8_project.entities.*;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -71,8 +70,4 @@ public class MappingService {
         entity.setId(id);
         return entity;
     }
-
-    // Employee
-
-
 }
