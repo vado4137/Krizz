@@ -72,6 +72,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -100,6 +104,7 @@
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
+
 
 
         <!-- Mock Keycloak for Tests-->
@@ -175,79 +180,7 @@
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>build-docker-images</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <!-- Required when building docker images -->
-                                    <goal>repackage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.spotify</groupId>
-                        <artifactId>dockerfile-maven-plugin</artifactId>
-                        <version>${dockerfile-maven-plugin.version}</version>
-                        <executions>
-                            <!-- build latest image on package phase -->
-                            <execution>
-                                <id>build-and-tag-latest</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <tag>latest</tag>
-                                </configuration>
-                            </execution>
-                            <!-- build version image on package phase -->
-                            <execution>
-                                <id>tag-version</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>tag</goal>
-                                </goals>
-                                <configuration>
-                                    <tag>${project.version}</tag>
-                                </configuration>
-                            </execution>
-                            <!-- automatic deployment on deploy phase -->
-                            <!--execution>
-                                <id>push-version</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>push</goal>
-                                </goals>
-                                <configuration>
-                                    <tag>${project.version}</tag>
-                                </configuration>
-                            </execution-->
-                        </executions>
-                        <configuration>
-                            <skipDockerInfo>true</skipDockerInfo>
-                            <pullNewerImage>true</pullNewerImage>
-                            <repository>berndheidemann/employee-management-service</repository>
-                            <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-                            <buildArgs>
-                                <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                            </buildArgs>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+
 
 
 </project>
