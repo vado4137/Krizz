@@ -128,27 +128,25 @@ public class ProjectController {
 
     // Employee
 
-    @GetMapping({"/qualifications", "/qualifications/{id}/employees", "/employees/{id}", "/employees", "/employees/{id}/qualifications"})
+    @GetMapping("/**")
     public JsonNode employeeRedirectGet(@RequestHeader("Authorization") String token, HttpServletRequest request) {
         return employeeService.redirectGet(request.getRequestURI(), token, JsonNode.class);
     }
 
-    @DeleteMapping({"/qualifications/{id}", "/employees/{id}", "/employees/{id}/qualifications"})
+    @DeleteMapping("/**")
     public JsonNode employeeRedirectDelete(@RequestHeader("Authorization") String token, HttpServletRequest request) {
         return employeeService.redirectDelete(request.getRequestURI(), token, JsonNode.class);
     }
 
-    @PostMapping({"/qualifications", "/employees", "/employees/{id}/qualifications"})
+    @PostMapping("/**")
     public <B> JsonNode employeeRedirectPost(@RequestHeader("Authorization") String token, @RequestBody B body,
                                            HttpServletRequest request) {
         return employeeService.redirectPost(request.getRequestURI(), token, JsonNode.class, body);
     }
 
-    @PutMapping({"/qualifications/{id}", "/employees/{id}"})
+    @PutMapping("/**")
     public <B> JsonNode employeeRedirectPut(@RequestHeader("Authorization") String token, @RequestBody B body,
                                           HttpServletRequest request) {
         return employeeService.redirectPut(request.getRequestURI(), token, JsonNode.class, body);
     }
-
-
 }
