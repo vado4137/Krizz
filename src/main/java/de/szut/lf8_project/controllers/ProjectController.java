@@ -75,19 +75,6 @@ public class ProjectController {
 
     // Employee Assoc
 
-    @GetMapping("/employees/{id}/projects")
-    public List<GetProjectDTO> getProjectsByEmployeeId(@PathVariable Long id, @RequestHeader("Authorization") String token) {
-        try {
-            employeeService.findById(id, token);
-        } catch (HttpClientErrorException.NotFound exception) {
-            throw new ResourceNotFoundException("Employee " + id + " does not exist");
-        }
-        return employeeAssocService.getProjectIdsFromEmployee(id).stream()
-                .map(projectService::findById)
-                .map(mappingService::mapProjectEntityToGetProjectDTO)
-                .toList();
-    }
-
     @GetMapping("/projects/{id}/employees")
     public List<GetEmployeeAssocDTO> getEmployeesByProjectId(@PathVariable Long id) {
         return mappingService.mapEmployeeAssocEntitiesToGetEmployeeAssocDTOs(employeeAssocService.getEmployeesFromProject(id));
@@ -124,29 +111,5 @@ public class ProjectController {
         } catch (NumberFormatException e) {
             throw new WrongIdFormatException("An error occurred while parsing the id to a number '" + body + "'");
         }
-    }
-
-    // Employee
-
-    @GetMapping("/**")
-    public JsonNode employeeRedirectGet(@RequestHeader("Authorization") String token, HttpServletRequest request) {
-        return employeeService.redirectGet(request.getRequestURI(), token, JsonNode.class);
-    }
-
-    @DeleteMapping("/**")
-    public JsonNode employeeRedirectDelete(@RequestHeader("Authorization") String token, HttpServletRequest request) {
-        return employeeService.redirectDelete(request.getRequestURI(), token, JsonNode.class);
-    }
-
-    @PostMapping("/**")
-    public <B> JsonNode employeeRedirectPost(@RequestHeader("Authorization") String token, @RequestBody B body,
-                                           HttpServletRequest request) {
-        return employeeService.redirectPost(request.getRequestURI(), token, JsonNode.class, body);
-    }
-
-    @PutMapping("/**")
-    public <B> JsonNode employeeRedirectPut(@RequestHeader("Authorization") String token, @RequestBody B body,
-                                          HttpServletRequest request) {
-        return employeeService.redirectPut(request.getRequestURI(), token, JsonNode.class, body);
     }
 }
